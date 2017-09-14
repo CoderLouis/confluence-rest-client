@@ -31,6 +31,9 @@ public class ExampleHttpAuthClient {
 			APIUriProvider uriProvider = new APIUriProvider(new URI(conf.getBaseUrl() + "/wiki"));
 			
 			new ExampleApp(executorService, requestService, uriProvider).run();
+			
+			requestService.close();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

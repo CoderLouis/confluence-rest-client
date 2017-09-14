@@ -1,4 +1,4 @@
-# ConfluenceRestClient
+# Confluence REST API Client
 
 A simple Java Client to communicate with the Confluence REST API.
 
@@ -7,7 +7,7 @@ A simple Java Client to communicate with the Confluence REST API.
 Current release: `0.8.2`
 
 This is a reworked version of [ConfluenceRestClient](https://github.com/MartinBoehmer/ConfluenceRestClient).
-Thsi version decouples the HTTP-specific code from the Confluence client code so
+This version decouples the HTTP-specific code from the Confluence client code so
 that it, for example, is possible to implement the client using other third party libraries, 
 or using a different form of authentication). This version also separates the API
 (now in the src/api folder) from the implementation (in the src/main folder).
