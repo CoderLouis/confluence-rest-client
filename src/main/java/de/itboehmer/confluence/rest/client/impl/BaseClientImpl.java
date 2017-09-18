@@ -16,14 +16,15 @@
  */
 package de.itboehmer.confluence.rest.client.impl;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.concurrent.ExecutorService;
 
 import org.apache.http.client.utils.URIBuilder;
 
-import de.itboehmer.confluence.rest.core.RequestException;
 import de.itboehmer.confluence.rest.core.RequestService;
+import de.itboehmer.confluence.rest.core.RestException;
 import de.itboehmer.confluence.rest.core.domain.content.AttachmentResultsBean;
 import de.itboehmer.confluence.rest.core.impl.APIUriProvider;
 import de.itboehmer.confluence.rest.core.util.URIHelper;
@@ -34,40 +35,41 @@ import de.itboehmer.confluence.rest.core.util.URIHelper;
  */
 public abstract class BaseClientImpl {
 
-    protected final ExecutorService executorService;
+	protected final ExecutorService executorService;
 
 	private RequestService requestService;
 
 	private APIUriProvider apiConfig;
 
-    public BaseClientImpl(ExecutorService executorService, RequestService requestService, APIUriProvider apiConfig) {
-        this.executorService = executorService;
-        this.requestService = requestService;
+	public BaseClientImpl(ExecutorService executorService, RequestService requestService, APIUriProvider apiConfig) {
+		this.executorService = executorService;
+		this.requestService = requestService;
 		this.apiConfig = apiConfig;
-    }
+	}
 
-    protected URIBuilder buildPath(String... paths) {
-        return URIHelper.buildPath(apiConfig.getRestApiBaseUri(), paths);
-    }
+	protected URIBuilder buildPath(String... paths) {
+		return URIHelper.buildPath(apiConfig.getRestApiBaseUri(), paths);
+	}
 
-    protected URIBuilder buildNonRestPath(String... paths) {
-        return URIHelper.buildPath(apiConfig.getBaseUri(), paths);
-    }
+	protected URIBuilder buildNonRestPath(String... paths) {
+		return URIHelper.buildPath(apiConfig.getBaseUri(), paths);
+	}
 
-	protected <T> T executeGetRequest(URI uri, Class<T> resultClass) throws RequestException {
+	protected <T> T executeGetRequest(URI uri, Class<T> resultClass) throws IOException, RestException {
 		return requestService.executeGetRequest(uri, resultClass);
 	}
 
-	protected InputStream executeGetRequestForDownload(URI uri) throws RequestException {
+	protected InputStream executeGetRequestForDownload(URI uri) throws IOException, RestException {
 		return requestService.executeGetRequestForDownload(uri);
 	}
 
-    protected <T> T executePostRequest(URI uri, Object content, Class<T> resultClass) throws RequestException {
-    		return requestService.executePostRequest(uri, content, resultClass);
+	protected <T> T executePostRequest(URI uri, Object content, Class<T> resultClass)
+			throws IOException, RestException {
+		return requestService.executePostRequest(uri, content, resultClass);
 	}
-    
-    protected AttachmentResultsBean executePostRequestForUpload(URI uri, InputStream inputStream, String title,
-			String comment, Class<AttachmentResultsBean> resultClass) throws RequestException {
-    		return requestService.executePostRequestForUpload(uri, inputStream, title, comment, resultClass);
-    }
+
+	protected AttachmentResultsBean executePostRequestForUpload(URI uri, InputStream inputStream, String title,
+			String comment, Class<AttachmentResultsBean> resultClass) throws IOException, RestException {
+		return requestService.executePostRequestForUpload(uri, inputStream, title, comment, resultClass);
+	}
 }

@@ -17,6 +17,8 @@ package de.itboehmer.confluence.rest.core.misc;
 
 import java.net.HttpURLConnection;
 
+import de.itboehmer.confluence.rest.core.RestException;
+
 /**
  * @author Martin Böhmer
  */

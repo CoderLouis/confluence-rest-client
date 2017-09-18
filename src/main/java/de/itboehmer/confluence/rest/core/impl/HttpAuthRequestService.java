@@ -36,10 +36,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.stream.JsonReader;
 
-import de.itboehmer.confluence.rest.core.RequestException;
 import de.itboehmer.confluence.rest.core.RequestService;
-import de.itboehmer.confluence.rest.core.misc.RestException;
-import de.itboehmer.confluence.rest.core.misc.SecurityException;
+import de.itboehmer.confluence.rest.core.RestException;
+import de.itboehmer.confluence.rest.core.SecurityException;
 import de.itboehmer.confluence.rest.core.util.HttpMethodFactory;
 
 /**
@@ -56,11 +55,10 @@ public class HttpAuthRequestService extends AbstractRequestService implements Re
 	private HttpHost proxy;
 	private HttpClientContext clientContext;
 
-	public void connect(URI uri, String username, String password)
-			throws URISyntaxException, SecurityException {
+	public void connect(URI uri, String username, String password) throws URISyntaxException, SecurityException {
 		connect(uri, username, password, null);
 	}
-	
+
 	public void connect(URI uri, String username, String password, HttpHost proxyHost)
 			throws URISyntaxException, SecurityException {
 		log.info("Setting up REST client:");
@@ -148,14 +146,10 @@ public class HttpAuthRequestService extends AbstractRequestService implements Re
 	}
 
 	@Override
-	public <T> T executeGetRequest(URI uri, Class<T> resultClass) throws RequestException {
+	public <T> T executeGetRequest(URI uri, Class<T> resultClass) throws IOException, RestException {
 		log.debug("Executing request " + uri);
 		HttpGet httpRequest = HttpMethodFactory.createGetMethod(uri);
-		try {
-			return executeRequest(httpRequest, resultClass);
-		} catch (IOException | RestException e) {
-			throw new RequestException(e);
-		}
+		return executeRequest(httpRequest, resultClass);
 	}
 
 	private <T> T executeRequest(HttpRequestBase httpRequest, Class<T> resultClass)
@@ -179,14 +173,10 @@ public class HttpAuthRequestService extends AbstractRequestService implements Re
 	}
 
 	@Override
-	public InputStream executeGetRequestForDownload(URI uri) throws RequestException {
+	public InputStream executeGetRequestForDownload(URI uri) throws IOException, RestException {
 		log.debug("Executing request " + uri);
 		HttpGet method = HttpMethodFactory.createGetMethodForDownload(uri);
-		try {
-			return executeRequest(method);
-		} catch (IOException | RestException e) {
-			throw new RequestException(e);
-		}
+		return executeRequest(method);
 	}
 
 	private InputStream executeRequest(HttpGet httpRequest) throws IOException, RestException {
@@ -207,25 +197,17 @@ public class HttpAuthRequestService extends AbstractRequestService implements Re
 	}
 
 	@Override
-	public <T> T executePostRequest(URI uri, Object content, Class<T> resultClass) throws RequestException {
-		try {
-			String body = getGson().toJson(content);
-			HttpPost method = HttpMethodFactory.createPostMethod(uri, body);
-			return executeRequest(method, resultClass);
-		} catch (IOException | RestException e) {
-			throw new RequestException(e);
-		}
+	public <T> T executePostRequest(URI uri, Object content, Class<T> resultClass) throws IOException, RestException {
+		String body = getGson().toJson(content);
+		HttpPost method = HttpMethodFactory.createPostMethod(uri, body);
+		return executeRequest(method, resultClass);
 	}
 
 	@Override
 	public <T> T executePostRequestForUpload(URI uri, InputStream inputStream, String title, String comment,
-			Class<T> resultClass) throws RequestException {
-		try {
-			HttpPost method = HttpMethodFactory.createPostMethodForUpload(uri, inputStream, title, comment);
-			return executeRequest(method, resultClass);
-		} catch (IOException | RestException e) {
-			throw new RequestException(e);
-		}
+			Class<T> resultClass) throws IOException, RestException {
+		HttpPost method = HttpMethodFactory.createPostMethodForUpload(uri, inputStream, title, comment);
+		return executeRequest(method, resultClass);
 	}
 
 	private RestException createRestException(HttpResponse response, Class<? extends RestException> exclass) {
