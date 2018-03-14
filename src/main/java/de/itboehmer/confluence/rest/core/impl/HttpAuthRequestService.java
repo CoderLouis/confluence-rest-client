@@ -179,9 +179,10 @@ public class HttpAuthRequestService extends AbstractRequestService implements Re
 		return executeRequest(method);
 	}
 
+
 	private InputStream executeRequest(HttpGet httpRequest) throws IOException, RestException {
 		log.debug("Executing request " + httpRequest);
-		CloseableHttpResponse response = this.httpclient.execute(httpRequest);
+		CloseableHttpResponse response = this.httpclient.execute(httpRequest, this.clientContext);
 		int statusCode = response.getStatusLine().getStatusCode();
 		log.debug("Received status code " + statusCode + " from " + httpRequest);
 		switch (statusCode) {

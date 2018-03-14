@@ -15,12 +15,12 @@
  */
 package de.itboehmer.confluence.rest.core.domain.cql;
 
-import com.google.gson.annotations.Expose;
-import de.itboehmer.confluence.rest.core.domain.BaseBean;
-import de.itboehmer.confluence.rest.core.domain.common.LinksBean;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.annotations.Expose;
+
+import de.itboehmer.confluence.rest.core.domain.common.LinksBean;
 
 /**
  * Author: Christian Schulze (c.schulze@micromata.de)
@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class CqlSearchResult {
 
-    private List<BaseBean> results = new ArrayList<>();
+    private List<SearchResultEntry> results = new ArrayList<>();
     @Expose
     private int start;
     @Expose
@@ -102,11 +102,11 @@ public class CqlSearchResult {
         this.totalSize = totalSize;
     }
 
-    public List<BaseBean> getResults() {
+    public List<SearchResultEntry> getResults() {
         return results;
     }
 
-    public void setResults(List<BaseBean> results) {
+    public void setResults(List<SearchResultEntry> results) {
         this.results = results;
     }
 }

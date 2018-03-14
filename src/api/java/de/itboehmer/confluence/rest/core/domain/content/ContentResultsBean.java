@@ -15,11 +15,12 @@
  */
 package de.itboehmer.confluence.rest.core.domain.content;
 
-import com.google.gson.annotations.Expose;
-import de.itboehmer.confluence.rest.core.domain.BaseBean;
-
 import java.util.ArrayList;
 import java.util.List;
+
+import com.google.gson.annotations.Expose;
+
+import de.itboehmer.confluence.rest.core.domain.BaseBean;
 
 /**
  * Author: Christian Schulze (c.schulze@micromata.de)
