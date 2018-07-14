@@ -33,7 +33,6 @@ import static de.itboehmer.confluence.rest.core.misc.RestPathConstants.SPECIFIC_
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,12 +40,9 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.message.BasicNameValuePair;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -90,7 +86,7 @@ public class ContentClientImpl extends BaseClientImpl implements ContentClient {
             if (version > 0) {
                 uriBuilder.addParameter(VERSION, String.valueOf(version));
             }
-            if (CollectionUtils.isNotEmpty(expand) == true) {
+    		if (expand != null && !expand.isEmpty()) {
                 String join = StringUtils.join(expand, ",");
                 uriBuilder.addParameter(EXPAND, join);
             }

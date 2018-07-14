@@ -29,7 +29,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Future;
 
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.http.NameValuePair;
@@ -68,8 +67,9 @@ public class SearchClientImpl extends BaseClientImpl implements SearchClient {
 		if (searchBean.getExcerpt() != null) {
 			nameValuePairs.add(new BasicNameValuePair(EXCERPT, searchBean.getExcerpt().getName()));
 		}
-		if (CollectionUtils.isNotEmpty(searchBean.getExpand()) == true) {
-			String join = StringUtils.join(searchBean.getExpand(), ",");
+		List<String> expand = searchBean.getExpand();
+		if (expand != null && !expand.isEmpty()) {
+			String join = StringUtils.join(expand, ",");
 			nameValuePairs.add(new BasicNameValuePair(EXPAND, join));
 		}
 		if (searchBean.getStart() > 0) {
