@@ -4,7 +4,7 @@ A simple Java Client to communicate with the Confluence REST API.
 
 ## Version
 
-Current release: `0.8.4`
+Current release: `1.0.0`
 
 This is a reworked version of [ConfluenceRestClient](https://github.com/MartinBoehmer/ConfluenceRestClient).
 This version decouples the HTTP-specific code from the Confluence client code so
@@ -57,8 +57,10 @@ ContentBean content = future.get();
 ## License
 
 Copyright 2016 Micromata GmbH
+
 Modifications Copyright 2017 Martin Böhmer
-Modifications Copyright 2017 Mikkel R. Jakobsen
+
+Modifications Copyright 2017,2018 Mikkel R. Jakobsen
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use these files except in compliance with the License.
 You may obtain a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
