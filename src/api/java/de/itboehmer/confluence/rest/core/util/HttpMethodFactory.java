@@ -16,6 +16,12 @@
  */
 package de.itboehmer.confluence.rest.core.util;
 
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.nio.charset.Charset;
+
 import org.apache.commons.codec.CharEncoding;
 import org.apache.http.HttpHeaders;
 import org.apache.http.HttpMessage;
@@ -23,23 +29,21 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.message.BasicHeader;
-
-import javax.ws.rs.core.MediaType;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URI;
-import java.nio.charset.Charset;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.protocol.HTTP;
+import org.apache.http.message.BasicHeader;
 
 /**
  * @author Christian Schulze (c.schulze@micromata.de)
  * @author Martin Böhmer
  */
 public class HttpMethodFactory {
+    
+    /** "application/octet-stream" */
+    private final static String APPLICATION_OCTET_STREAM = "application/octet-stream";
+
+    /** "application/json" */
+    private final static String APPLICATION_JSON = "application/json";
     
     public static HttpGet createGetMethod(URI uri) {
         HttpGet method = new HttpGet(uri);
@@ -50,7 +54,7 @@ public class HttpMethodFactory {
     public static HttpGet createGetMethodForDownload(URI uri) {
         HttpGet method = new HttpGet(uri);
         method.addHeader(HttpHeaders.ACCEPT,
-                MediaType.APPLICATION_OCTET_STREAM);
+        		APPLICATION_OCTET_STREAM);
         return method;
     }
     
@@ -91,7 +95,7 @@ public class HttpMethodFactory {
     }
     
     private static void setHeadersForJsonExchange(HttpMessage httpMessage) {
-        httpMessage.addHeader(new BasicHeader(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON));
-        httpMessage.addHeader(new BasicHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON));
+        httpMessage.addHeader(new BasicHeader(HttpHeaders.ACCEPT, APPLICATION_JSON));
+        httpMessage.addHeader(new BasicHeader(HttpHeaders.CONTENT_TYPE, APPLICATION_JSON));
     }
 }
